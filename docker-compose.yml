@@ -41,7 +41,7 @@ services:
   # VAULT - Secrets Management
   # ==========================================
   vault:
-    image: vault:1.15
+    image: hashicorp/vault:1.15
     container_name: ecom-vault
     cap_add:
       - IPC_LOCK
