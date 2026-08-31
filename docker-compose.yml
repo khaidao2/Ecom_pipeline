@@ -399,7 +399,10 @@ services:
   # DBT - Data Transformation
   # ==========================================
   dbt:
-    image: ghcr.io/dbt-labs/dbt-starrocks:1.7.4
+    build:
+      context: ./dbt
+      dockerfile: Dockerfile
+    image: ecom-dbt:latest
     container_name: ecom-dbt
     environment:
       DBT_PROFILES_DIR: /opt/dbt
