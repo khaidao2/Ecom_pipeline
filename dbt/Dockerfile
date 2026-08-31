@@ -7,8 +7,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir \
-        dbt-core==1.7.4 \
-        dbt-starrocks==1.7.0
+        dbt-core \
+        dbt-starrocks
 
 ENV DBT_PROFILES_DIR=/opt/dbt
 ENV DBT_TARGET=starrocks
