@@ -318,7 +318,8 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./volumes/starrocks/data:/data
+      - ./volumes/starrocks/fe-meta:/data/deploy/starrocks/fe/meta
+      - ./volumes/starrocks/be-storage:/data/deploy/starrocks/be/storage
     healthcheck:
       test: ["CMD-SHELL", "curl -s http://localhost:8030/api/health || exit 1"]
       interval: 15s
