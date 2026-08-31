@@ -22,10 +22,10 @@ x-airflow-common: &airflow-common
     MINIO_ACCESS_KEY: ${MINIO_ROOT_USER}
     MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
   volumes:
-    - ./dags:/opt/airflow/dags
-    - ./logs:/opt/airflow/logs
-    - ./scripts:/opt/airflow/scripts
-    - ./configs/airflow:/opt/airflow/configs
+    - ./dags:/opt/airflow/dags:Z
+    - ./logs:/opt/airflow/logs:Z
+    - ./scripts:/opt/airflow/scripts:Z
+    - ./configs/airflow:/opt/airflow/configs:Z
   depends_on:
     postgres-airflow:
       condition: service_healthy
@@ -52,8 +52,8 @@ services:
     ports:
       - "8200:8200"
     volumes:
-      - ./configs/vault/vault-config.hcl:/vault/config/vault-config.hcl
-      - ./volumes/vault:/vault/file
+      - ./configs/vault/vault-config.hcl:/vault/config/vault-config.hcl:ro,z
+      - ./volumes/vault:/vault/file:Z
     command: server -dev -config=/vault/config/vault-config.hcl
     healthcheck:
       test: ["CMD", "vault", "status", "-address=http://127.0.0.1:8200"]
@@ -76,7 +76,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - ./volumes/airflow/postgres:/var/lib/postgresql/data
+      - ./volumes/airflow/postgres:/var/lib/postgresql/data:Z
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U airflow"]
       interval: 10s
@@ -172,7 +172,7 @@ services:
       - "9000:9000"
       - "9001:9001"
     volumes:
-      - ./volumes/minio:/data
+      - ./volumes/minio:/data:Z
     command: server /data --console-address ":9001"
     healthcheck:
       test: ["CMD", "mc", "ready", "local"]
@@ -194,7 +194,7 @@ services:
     ports:
       - "2181:2181"
     volumes:
-      - ./volumes/kafka/zookeeper:/var/lib/zookeeper/data
+      - ./volumes/kafka/zookeeper:/var/lib/zookeeper/data:Z
     healthcheck:
       test: ["CMD-SHELL", "echo ruok | nc localhost 2181 | grep imok"]
       interval: 10s
@@ -225,7 +225,7 @@ services:
       - "9092:9092"
       - "29092:29092"
     volumes:
-      - ./volumes/kafka/kafka:/var/lib/kafka/data
+      - ./volumes/kafka/kafka:/var/lib/kafka/data:Z
     healthcheck:
       test: ["CMD-SHELL", "kafka-topics --bootstrap-server localhost:9092 --list || exit 1"]
       interval: 10s
@@ -272,7 +272,7 @@ services:
       POSTGRES_PASSWORD: apicurio
       POSTGRES_DB: apicurio
     volumes:
-      - ./volumes/apicurio:/var/lib/postgresql/data
+      - ./volumes/apicurio:/var/lib/postgresql/data:Z
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U apicurio"]
       interval: 10s
@@ -318,8 +318,8 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./volumes/starrocks/fe-meta:/data/deploy/starrocks/fe/meta
-      - ./volumes/starrocks/be-storage:/data/deploy/starrocks/be/storage
+      - ./volumes/starrocks/fe-meta:/data/deploy/starrocks/fe/meta:Z
+      - ./volumes/starrocks/be-storage:/data/deploy/starrocks/be/storage:Z
     healthcheck:
       test: ["CMD-SHELL", "curl -s http://localhost:8030/api/health || exit 1"]
       interval: 15s
@@ -347,9 +347,9 @@ services:
         state.checkpoints.dir: file:///opt/flink/checkpoints
         state.savepoints.dir: file:///opt/flink/savepoints
     volumes:
-      - ./configs/flink/flink-conf.yaml:/opt/flink/conf/flink-conf.yaml
-      - ./volumes/flink/checkpoints:/opt/flink/checkpoints
-      - ./volumes/flink/savepoints:/opt/flink/savepoints
+      - ./configs/flink/flink-conf.yaml:/opt/flink/conf/flink-conf.yaml:ro,z
+      - ./volumes/flink/checkpoints:/opt/flink/checkpoints:Z
+      - ./volumes/flink/savepoints:/opt/flink/savepoints:Z
     networks:
       - ecom-net
 
@@ -369,9 +369,9 @@ services:
         state.checkpoints.dir: file:///opt/flink/checkpoints
         state.savepoints.dir: file:///opt/flink/savepoints
     volumes:
-      - ./configs/flink/flink-conf.yaml:/opt/flink/conf/flink-conf.yaml
-      - ./volumes/flink/checkpoints:/opt/flink/checkpoints
-      - ./volumes/flink/savepoints:/opt/flink/savepoints
+      - ./configs/flink/flink-conf.yaml:/opt/flink/conf/flink-conf.yaml:ro,z
+      - ./volumes/flink/checkpoints:/opt/flink/checkpoints:Z
+      - ./volumes/flink/savepoints:/opt/flink/savepoints:Z
     networks:
       - ecom-net
 
@@ -389,8 +389,8 @@ services:
       DBT_PROFILES_DIR: /opt/dbt
       DBT_TARGET: starrocks
     volumes:
-      - ./dbt:/opt/dbt
-      - ./configs/dbt/profiles.yml:/opt/dbt/profiles.yml
+      - ./dbt:/opt/dbt:Z
+      - ./configs/dbt/profiles.yml:/opt/dbt/profiles.yml:ro,z
     depends_on:
       starrocks-fe:
         condition: service_healthy
@@ -410,7 +410,7 @@ services:
     environment:
       DATA_DIR: /data/raw
     volumes:
-      - ./volumes/raw-data:/data/raw
+      - ./volumes/raw-data:/data/raw:Z
     networks:
       - ecom-net
 
