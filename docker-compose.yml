@@ -196,7 +196,7 @@ services:
     volumes:
       - ./volumes/kafka/zookeeper:/var/lib/zookeeper/data:Z
     healthcheck:
-      test: ["CMD-SHELL", "echo ruok | nc localhost 2181 | grep imok"]
+      test: ["CMD-SHELL", "echo mntr | nc -w 2 localhost 2181 | grep -q zk_version || echo srvr | nc -w 2 localhost 2181 | grep -q Zookeeper"]
       interval: 10s
       timeout: 5s
       retries: 5
