@@ -308,7 +308,7 @@ services:
   # STARROCKS - Data Warehouse
   # ==========================================
   starrocks-fe:
-    image: starrocks/fe-starrocks:3.1-latest
+    image: starrocks/fe-ubuntu:3.1-latest
     container_name: ecom-starrocks-fe
     environment:
       - FE_SERVERS=fe1:starrocks-fe:9010
@@ -327,7 +327,7 @@ services:
       - ecom-net
 
   starrocks-be:
-    image: starrocks/be-starrocks:3.1-latest
+    image: starrocks/be-ubuntu:3.1-latest
     container_name: ecom-starrocks-be
     environment:
       - FE_HOSTS=starrocks-fe:9010
