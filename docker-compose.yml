@@ -238,7 +238,7 @@ services:
   # APICURIO - Schema Registry
   # ==========================================
   apicurio:
-    image: apicurio/apicurio-registry:2.6.3.Final
+    image: quay.io/apicurio/apicurio-registry:latest
     container_name: ecom-apicurio
     environment:
       QUARKUS_PROFILE: prod
@@ -403,6 +403,7 @@ services:
       context: ./dbt
       dockerfile: Dockerfile
     image: ecom-dbt:latest
+    pull_policy: build
     container_name: ecom-dbt
     environment:
       DBT_PROFILES_DIR: /opt/dbt
