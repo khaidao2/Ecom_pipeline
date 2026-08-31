@@ -305,46 +305,25 @@ services:
       - ecom-net
 
   # ==========================================
-  # STARROCKS - Data Warehouse
+  # STARROCKS - Data Warehouse (all-in-one FE+BE)
   # ==========================================
   starrocks-fe:
-    image: starrocks/fe-ubuntu:3.1-latest
+    image: starrocks/allin1-ubuntu:latest
     container_name: ecom-starrocks-fe
-    environment:
-      - FE_SERVERS=fe1:starrocks-fe:9010
-      - FE_ID=1
     ports:
       - "8030:8030"
+      - "8040:8040"
       - "9030:9030"
+      - "9050:9050"
+    stdin_open: true
+    tty: true
     volumes:
-      - ./volumes/starrocks/fe:/opt/starrocks/fe/image
+      - ./volumes/starrocks/data:/data
     healthcheck:
       test: ["CMD-SHELL", "curl -s http://localhost:8030/api/health || exit 1"]
       interval: 15s
       timeout: 10s
-      retries: 10
-    networks:
-      - ecom-net
-
-  starrocks-be:
-    image: starrocks/be-ubuntu:3.1-latest
-    container_name: ecom-starrocks-be
-    environment:
-      - FE_HOSTS=starrocks-fe:9010
-      - BE_ADDR=starrocks-be:9050
-    ports:
-      - "8040:8040"
-      - "9050:9050"
-    depends_on:
-      starrocks-fe:
-        condition: service_healthy
-    volumes:
-      - ./volumes/starrocks/be:/opt/starrocks/be/storage
-    healthcheck:
-      test: ["CMD-SHELL", "curl -s http://localhost:8040/api/health || exit 1"]
-      interval: 15s
-      timeout: 10s
-      retries: 10
+      retries: 30
     networks:
       - ecom-net
 
