@@ -1,0 +1,49 @@
+# ===========================================
+# Flink Configuration
+# ===========================================
+
+# JobManager
+jobmanager.rpc.address: flink-jobmanager
+jobmanager.rpc.port: 6123
+jobmanager.memory.process.size: 1600m
+
+# TaskManager
+taskmanager.memory.process.size: 1728m
+taskmanager.numberOfTaskSlots: 2
+
+# Parallelism
+parallelism.default: 2
+
+# State Backend (RocksDB for production)
+state.backend: rocksdb
+state.checkpoints.dir: file:///opt/flink/checkpoints
+state.savepoints.dir: file:///opt/flink/savepoints
+state.backend.incremental: true
+
+# Checkpointing
+execution.checkpointing.interval: 60000
+execution.checkpointing.min-pause: 30000
+execution.checkpointing.timeout: 600000
+execution.checkpointing.max-concurrent-checkpoints: 1
+execution.checkpointing.externalized-checkpoint-retention: RETAIN_ON_CANCELLATION
+
+# Restart Strategy
+restart-strategy: exponential-delay
+restart-strategy.exponential-delay.initial-backoff: 1s
+restart-strategy.exponential-delay.max-backoff: 60s
+restart-strategy.exponential-delay.backoff-multiplier: 2.0
+
+# Web UI
+rest.port: 8081
+rest.address: 0.0.0.0
+
+# Metrics
+metrics.reporters: prometheus
+metrics.reporter.prometheus.factory.class: org.apache.flink.metrics.prometheus.PrometheusReporterFactory
+metrics.reporter.prometheus.port: 9249
+
+# Serialization
+pipeline.serialization-config: org.apache.flink.api.java.typeutils.TypeExtractor
+
+# Kafka connector
+pipeline.connector.kafka: org.apache.flink:flink-connector-kafka:3.0.0-1.18

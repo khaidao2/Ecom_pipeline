@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "ProductCatalog",
+  "namespace": "com.ecom.stock.catalog",
+  "doc": "Product catalog data",
+  "fields": [
+    {"name": "sku", "type": "string"},
+    {"name": "name", "type": "string"},
+    {"name": "category", "type": "string"},
+    {"name": "price", "type": {"type": "bytes", "logicalType": "decimal", "precision": 12, "scale": 2}},
+    {"name": "cost", "type": {"type": "bytes", "logicalType": "decimal", "precision": 12, "scale": 2}},
+    {"name": "stock", "type": "int"},
+    {"name": "warehouse", "type": "string"},
+    {"name": "supplier", "type": "string"},
+    {"name": "updated_at", "type": {"type": "long", "logicalType": "timestamp-millis"}}
+  ]
+}

@@ -1,0 +1,32 @@
+-- Schema definition for marts
+-- models/marts/schema.yml
+
+version: 2
+
+models:
+  - name: daily_stock_summary
+    description: "Daily stock price summary with technical indicators"
+    columns:
+      - name: symbol
+        description: "Stock ticker symbol"
+        tests:
+          - not_null
+      - name: trade_date
+        description: "Trading date"
+        tests:
+          - not_null
+      - name: close_price
+        description: "Closing price"
+        tests:
+          - not_null
+      - name: daily_return_pct
+        description: "Daily return percentage"
+      - name: ma_20
+        description: "20-day moving average"
+      - name: ma_50
+        description: "50-day moving average"
+      - name: signal
+        description: "Trading signal (BUY/SELL/HOLD)"
+        tests:
+          - accepted_values:
+              values: ['BUY', 'SELL', 'HOLD']

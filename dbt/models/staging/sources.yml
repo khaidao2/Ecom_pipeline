@@ -1,0 +1,27 @@
+-- Source definition for raw stock data
+-- models/staging/sources.yml
+
+version: 2
+
+sources:
+  - name: raw
+    database: stock_data
+    schema: raw
+    tables:
+      - name: stock_prices
+        description: "Raw stock price data from market feeds"
+        columns:
+          - name: symbol
+            description: "Stock ticker symbol"
+            tests:
+              - not_null
+          - name: trade_date
+            description: "Trading date"
+            tests:
+              - not_null
+          - name: close_price
+            description: "Closing price"
+            tests:
+              - not_null
+              - dbt_utils.accepted_range:
+                  min_value: 0

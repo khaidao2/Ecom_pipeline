@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "Weather",
+  "namespace": "com.ecom.stock.weather",
+  "doc": "Weather data by city",
+  "fields": [
+    {"name": "city", "type": "string"},
+    {"name": "timestamp", "type": {"type": "long", "logicalType": "timestamp-millis"}},
+    {"name": "temperature_celsius", "type": "float"},
+    {"name": "humidity", "type": "int"},
+    {"name": "condition", "type": {"type": "enum", "name": "WeatherCondition", "symbols": ["sunny", "cloudy", "rainy", "stormy", "foggy", "humid"]}},
+    {"name": "wind_speed_kmh", "type": "float"},
+    {"name": "rain_mm", "type": "float", "default": 0.0},
+    {"name": "visibility_km", "type": "float"},
+    {"name": "uv_index", "type": "int"}
+  ]
+}

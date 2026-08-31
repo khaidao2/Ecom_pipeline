@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "ExchangeRate",
+  "namespace": "com.ecom.stock.finance",
+  "doc": "Exchange rate data",
+  "fields": [
+    {"name": "pair", "type": "string", "doc": "Currency pair e.g. USD/VND"},
+    {"name": "timestamp", "type": {"type": "long", "logicalType": "timestamp-millis"}},
+    {"name": "bid", "type": "double"},
+    {"name": "ask", "type": "double"},
+    {"name": "mid", "type": "double"},
+    {"name": "change_pct", "type": "double"},
+    {"name": "source", "type": "string"}
+  ]
+}

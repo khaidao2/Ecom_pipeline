@@ -1,0 +1,28 @@
+{
+  "type": "record",
+  "name": "EcommerceEvent",
+  "namespace": "com.ecom.stock.events",
+  "doc": "E-commerce user events (click, view, cart, purchase)",
+  "fields": [
+    {"name": "event_id", "type": "string", "doc": "Unique event identifier"},
+    {"name": "event_type", "type": {"type": "enum", "name": "EventType", "symbols": ["page_view", "product_view", "add_to_cart", "remove_from_cart", "purchase", "wishlist"]}},
+    {"name": "timestamp", "type": {"type": "long", "logicalType": "timestamp-millis"}, "doc": "Event timestamp"},
+    {"name": "user_id", "type": "string"},
+    {"name": "session_id", "type": "string"},
+    {"name": "product", "type": {
+      "type": "record",
+      "name": "Product",
+      "fields": [
+        {"name": "sku", "type": "string"},
+        {"name": "name", "type": "string"},
+        {"name": "category", "type": "string"},
+        {"name": "price", "type": {"type": "bytes", "logicalType": "decimal", "precision": 12, "scale": 2}}
+      ]
+    }},
+    {"name": "quantity", "type": "int", "default": 0},
+    {"name": "device", "type": {"type": "enum", "name": "Device", "symbols": ["mobile", "desktop", "tablet"]}},
+    {"name": "browser", "type": "string"},
+    {"name": "ip_address", "type": "string"},
+    {"name": "referrer", "type": ["null", "string"], "default": null}
+  ]
+}

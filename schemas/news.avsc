@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "News",
+  "namespace": "com.ecom.stock.news",
+  "doc": "News articles",
+  "fields": [
+    {"name": "news_id", "type": "string"},
+    {"name": "title", "type": "string"},
+    {"name": "source", "type": "string"},
+    {"name": "category", "type": {"type": "enum", "name": "NewsCategory", "symbols": ["business", "technology", "politics", "sports", "entertainment", "health"]}},
+    {"name": "timestamp", "type": {"type": "long", "logicalType": "timestamp-millis"}},
+    {"name": "url", "type": "string"},
+    {"name": "author", "type": "string"},
+    {"name": "sentiment", "type": {"type": "enum", "name": "Sentiment", "symbols": ["positive", "negative", "neutral"]}},
+    {"name": "tags", "type": {"type": "array", "items": "string"}, "default": []}
+  ]
+}

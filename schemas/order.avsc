@@ -1,0 +1,36 @@
+{
+  "type": "record",
+  "name": "Order",
+  "namespace": "com.ecom.stock.orders",
+  "doc": "Customer orders",
+  "fields": [
+    {"name": "order_id", "type": "string"},
+    {"name": "timestamp", "type": {"type": "long", "logicalType": "timestamp-millis"}},
+    {"name": "customer", "type": {
+      "type": "record",
+      "name": "Customer",
+      "fields": [
+        {"name": "customer_id", "type": "string"},
+        {"name": "name", "type": "string"},
+        {"name": "email", "type": "string"},
+        {"name": "phone", "type": "string"},
+        {"name": "city", "type": "string"}
+      ]
+    }},
+    {"name": "items", "type": {"type": "array", "items": {
+      "type": "record",
+      "name": "OrderItem",
+      "fields": [
+        {"name": "sku", "type": "string"},
+        {"name": "name", "type": "string"},
+        {"name": "price", "type": {"type": "bytes", "logicalType": "decimal", "precision": 12, "scale": 2}},
+        {"name": "quantity", "type": "int"}
+      ]
+    }}},
+    {"name": "subtotal", "type": {"type": "bytes", "logicalType": "decimal", "precision": 14, "scale": 2}},
+    {"name": "shipping_fee", "type": {"type": "bytes", "logicalType": "decimal", "precision": 10, "scale": 2}, "default": 0},
+    {"name": "total", "type": {"type": "bytes", "logicalType": "decimal", "precision": 14, "scale": 2}},
+    {"name": "payment_method", "type": {"type": "enum", "name": "PaymentMethod", "symbols": ["credit_card", "debit_card", "e_wallet", "bank_transfer", "cod"]}},
+    {"name": "status", "type": {"type": "enum", "name": "OrderStatus", "symbols": ["pending", "confirmed", "processing", "shipping", "delivered", "cancelled"]}}
+  ]
+}

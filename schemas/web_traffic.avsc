@@ -1,0 +1,21 @@
+{
+  "type": "record",
+  "name": "WebTraffic",
+  "namespace": "com.ecom.stock.traffic",
+  "doc": "Website traffic events",
+  "fields": [
+    {"name": "event_id", "type": "string"},
+    {"name": "event_type", "type": {"type": "enum", "name": "TrafficEvent", "symbols": ["page_view", "session_start", "session_end", "click", "scroll", "conversion"]}},
+    {"name": "timestamp", "type": {"type": "long", "logicalType": "timestamp-millis"}},
+    {"name": "session_id", "type": "string"},
+    {"name": "user_id", "type": "string"},
+    {"name": "page", "type": "string"},
+    {"name": "source", "type": {"type": "enum", "name": "TrafficSource", "symbols": ["organic", "paid", "social", "direct", "referral", "email"]}},
+    {"name": "medium", "type": "string"},
+    {"name": "device", "type": "string"},
+    {"name": "browser", "type": "string"},
+    {"name": "os", "type": "string"},
+    {"name": "city", "type": "string"},
+    {"name": "load_time_ms", "type": "int"}
+  ]
+}
