@@ -175,7 +175,7 @@ services:
       - ./volumes/minio:/data:Z
     command: server /data --console-address ":9001"
     healthcheck:
-      test: ["CMD", "mc", "ready", "local"]
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -246,8 +246,11 @@ services:
       APICURIO_STORAGE_KIND: sql
       APICURIO_STORAGE_SQL_KIND: postgresql
       APICURIO_STORAGE_SQL_URL: jdbc:postgresql://ecom-postgres-apicurio:5432/apicurio
-      APICURIO_STORAGE_SQL_USER: apicurio
-      APICURIO_STORAGE_SQL_PASSWORD: apicurio
+      APICURIO_DATASOURCE_URL: jdbc:postgresql://ecom-postgres-apicurio:5432/apicurio
+      APICURIO_DATASOURCE_USERNAME: apicurio
+      APICURIO_DATASOURCE_PASSWORD: apicurio
+      QUARKUS_DATASOURCE_POSTGRESQL_ACTIVE: "true"
+      QUARKUS_DATASOURCE_H2_ACTIVE: "false"
       QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://ecom-postgres-apicurio:5432/apicurio
       QUARKUS_DATASOURCE_USERNAME: apicurio
       QUARKUS_DATASOURCE_PASSWORD: apicurio
