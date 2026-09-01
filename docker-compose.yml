@@ -22,10 +22,10 @@ x-airflow-common: &airflow-common
     MINIO_ACCESS_KEY: ${MINIO_ROOT_USER}
     MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
   volumes:
-    - ./dags:/opt/airflow/dags:Z
-    - ./logs:/opt/airflow/logs:Z
-    - ./scripts:/opt/airflow/scripts:Z
-    - ./configs/airflow:/opt/airflow/configs:Z
+    - ./dags:/opt/airflow/dags:z
+    - ./logs:/opt/airflow/logs:z
+    - ./scripts:/opt/airflow/scripts:z
+    - ./configs/airflow:/opt/airflow/configs:z
   depends_on:
     postgres-airflow:
       condition: service_healthy
