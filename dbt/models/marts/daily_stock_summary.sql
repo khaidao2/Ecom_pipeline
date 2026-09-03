@@ -10,7 +10,6 @@ with daily_prices as (
         low_price,
         close_price,
         volume,
-        -- Calculate daily returns
         round(
             (close_price - lag(close_price) over (
                 partition by symbol 
