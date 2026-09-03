@@ -39,3 +39,22 @@ class VaultSecret(SecretManager):
             )
         except Exception as e:
             raise Exception(f"Failed to set secret: {e}")
+
+    def read_secret(self, path: str) -> Dict[str, str]:
+        """Read all key/value pairs of a secret path from Vault."""
+        resp = self.client.secrets.kv.v2.read_secret_version(path=path)
+        return resp["data"]["data"]
+
+    def export_to_env(self, path: str, key_map: dict = None,
+                      prefix: str = "VAULT") -> int:
+        """Read a secret path on Vault and export each key to os.environ.
+
+        key_map: maps {vault_key: env_var_name}.
+                 If None, uses the vault key itself as the env var name.
+        Returns number of keys exported.
+        """
+        data = self.read_secret(path)
+        for k, v in data.items():
+            env_name = key_map.get(k, k) if key_map else k
+            os.environ[env_name] = str(v)
+        return len(data)
